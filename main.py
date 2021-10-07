@@ -1,6 +1,5 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
-from matplotlib.pyplot import text
 from config_bot import TOKEN
 from secondary_defs import *
 
