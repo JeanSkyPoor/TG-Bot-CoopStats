@@ -48,7 +48,7 @@ class My_bot():
             await bot.send_photo(chat_id = chat_id, photo = open('dist_days.png', 'rb'))
 
             del_graph(['boxplot.png', 'dist_hours.png','dist_days.png'])
-        except ValueError:
+        except ValueError or UnboundLocalError:
             await message.reply(text = 'Что-то пошло не так. Проверь введенные данные')
         
     @dp.message_handler(commands='show_all')
@@ -76,7 +76,7 @@ class My_bot():
             await bot.send_photo(chat_id = chat_id, photo = open('count_message.png', 'rb'))
             await bot.send_photo(chat_id = chat_id, photo = open('pie.png', 'rb'))   
             del_graph(['snsboxplot.png','count_message.png','pie.png'])
-        except ValueError:
+        except ValueError or UnboundLocalError:
             await message.reply(text = 'Что-то пошло не так. Проверь введенные данные')
 
     @dp.message_handler(content_types=['photo'])
