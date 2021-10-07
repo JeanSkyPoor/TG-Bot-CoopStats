@@ -240,5 +240,7 @@ def init_message_data(message):
     date = message.date
     text = message.text
     user_name = message.from_user.username
+    if type(user_name) == type(None):
+            user_name = message.from_user.first_name
     message_id = message.message_id
     return user_id, date, text, user_name, message_id
