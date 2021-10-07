@@ -154,7 +154,7 @@ def create_graph_days_distribution_me(df, user_name):
     barplot(x = df_day.Date, y = df_day.User_name)
     plt.ylabel('Кол-во сообщений')
     plt.xlabel('Дата')
-    plt.xticks(rotation=27)
+    plt.xticks(rotation=26)
     plt.savefig('dist_days.png')
     plt.close()
     del df_day
