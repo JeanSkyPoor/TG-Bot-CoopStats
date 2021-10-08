@@ -193,8 +193,14 @@ def graph_count_message(df):
 def create_pie(df):
     new_df = df.groupby('User_name', as_index=False).agg({'Word_count':'sum'})
     labels = new_df.User_name
-    plt.pie(x=new_df.Word_count, autopct="%.1f%%", labels=labels, pctdistance=0.5, shadow=True)
-    plt.title("% от общего числа слов", fontsize=14)
+    words_sum = new_df.Word_count.sum()
+    
+    len_exp = new_df.Word_count.shape[0]
+    list_exp = [0.2 for i in range(len_exp)]
+    plt.pie(x=new_df.Word_count, autopct="%.1f%%", labels=labels, shadow=True, 
+        startangle = 30, radius=1.2, labeldistance = None, explode =list_exp )
+    plt.legend()
+    plt.title("% от общего числа слов ({} слов)".format(words_sum), fontsize=14)
     plt.savefig('pie.png')
     plt.close()
     del new_df
