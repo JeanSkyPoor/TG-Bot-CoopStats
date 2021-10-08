@@ -17,7 +17,11 @@ class My_bot():
             'статистику за последние 12 часов. Если хочешь узнать за весь записанный период, '
             'пропиши /show_me all.\n'
             'Команда /show_all применяется ко всем пользователям, а не лично к тебе. Ведет себя как /show_me + какой-то аргумент'))
-
+    
+    @dp.message_handler(commands='ping')
+    async def cmd_show_me(message: types.Message):
+        await message.reply(text = 'Я живой')
+        
     @dp.message_handler(commands='show_me')
     async def cmd_show_me(message: types.Message):
         try:
