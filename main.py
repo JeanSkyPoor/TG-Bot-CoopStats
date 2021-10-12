@@ -31,7 +31,7 @@ class My_bot():
             type_data, time, chat_id, user_id, user_name = message_preprocessing(message)
             df = init_df(type_data, time, user_id)
 
-            if df.shape[0] ==0:
+            if df.shape[0] == 0:
                 del df
                 return await message.reply(text = 'За указанный период ты ничего не написал')
             
@@ -64,7 +64,7 @@ class My_bot():
             user_id = None
 
             df = init_df(type_data, time, user_id)
-            if df.shape[0] ==0:
+            if df.shape[0] == 0:
                 del df
                 return await message.reply(text = 'За указанный период вы ничего не написали')
             df, number_message, mean_count_message = df_preprocessing(df)

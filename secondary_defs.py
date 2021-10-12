@@ -198,8 +198,8 @@ def create_pie(df):
     len_exp = new_df.Word_count.shape[0]
     list_exp = [0.2 for i in range(len_exp)]
     plt.pie(x=new_df.Word_count, autopct="%.1f%%", labels=labels, shadow=True, 
-        startangle = 30, radius=1.2, labeldistance = None, explode =list_exp )
-    plt.legend(loc='lower left', fontsize = 'small', shadow = True)
+        startangle = 30, radius=1.1, labeldistance = None, explode =list_exp )
+    plt.legend(loc='best', fontsize = 'small', shadow = True)
     plt.title("% от общего числа слов ({} слов)".format(words_sum), fontsize=14)
     plt.savefig('pie.png')
     plt.close()
