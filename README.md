@@ -5,7 +5,7 @@
 ![help](https://user-images.githubusercontent.com/69383370/137114323-52c22ea2-cdbc-4c83-bcab-d0063c07fc2a.png)
 
 
-Бот создан на ЯП Python, в качестве БД был выбран PostgreSQL. Автор архитектуры бота - https://github.com/JeanSkyPoor, автор самой БД и ее функций - , место развертки предоставил https://github.com/dmbaranov. 
+Бот создан на ЯП Python, в качестве БД был выбран PostgreSQL. Автор архитектуры бота - https://github.com/JeanSkyPoor, автор самой БД и ее функций - https://github.com/Daimonil , место развертки предоставил https://github.com/dmbaranov. 
 
 Бот в автоматическом режиме собирает статистику с чата телеграмма, где бот присутствует. По командам можно вывести интересующую информацию в виде графиков (команда /show_all all). ![boxplots](https://user-images.githubusercontent.com/69383370/137115316-bcfcb151-8aa9-4e4f-85e4-09e9c8fb3e7b.jpg)
 ![cont_words](https://user-images.githubusercontent.com/69383370/137115320-10be751e-3dba-4712-9d45-c6fe7d2d2344.jpg)
