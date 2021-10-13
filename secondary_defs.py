@@ -250,3 +250,9 @@ def init_message_data(message):
             user_name = message.from_user.first_name
     message_id = message.message_id
     return user_id, date, text, user_name, message_id
+
+async def on_startup(_):
+    await bot.send_message(chat_id = '-1001246197532', text = 'Я воскрес')
+
+async def on_shutdown(_):
+    await bot.send_message(chat_id = '-1001246197532', text = 'Я умер')
