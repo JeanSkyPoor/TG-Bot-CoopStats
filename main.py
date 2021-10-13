@@ -116,8 +116,9 @@ class My_bot():
         
         send_data_regular_message(user_id, user_name, date, word_count, text, message_id)
  
+async def on_startup(_):
+    await bot.send_message(chat_id = '-1001246197532', text = 'Бот запущен')
 
-if __name__ == "__main__":
-    My_bot = My_bot()
-    executor.start_polling(dp, skip_updates=True)
-    
+if __name__ == "__main__":       
+    My_bot = My_bot()    
+    executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
