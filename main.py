@@ -111,6 +111,9 @@ class My_bot():
         """
         Initializations data from message and send to def send_data().
         """
+        if message.from_user.is_bot == True:
+            pass
+
         user_id, date, text, user_name, message_id = init_message_data(message)
         word_count = get_len(text)
         
