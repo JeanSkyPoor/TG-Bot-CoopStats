@@ -4,10 +4,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import re
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,date
 from seaborn import boxplot, barplot, set_style
 set_style("darkgrid")
-plt.figure(figsize=(10,7))
+plt.rcParams['figure.figsize'] = (15, 8)
 
 def get_len(message):
     """
@@ -107,7 +107,8 @@ def init_df(type_data, time, user_id):
 
     elif type_data =='D':
         date_end = datetime.now()
-        date_start = datetime.now() + timedelta(days=(time *-1))
+        date_start = date.today() + timedelta(days=((time - 1) *-1))
+        print(date_end, date_start)
 
     elif type_data == 'M':
         date_end = datetime.now()
@@ -126,10 +127,10 @@ def create_boxplot_word_count_me(df, user_name):
     Create BoxPlot, save graph and del from memory
     """
     boxplot(x=df.User_name, y = df.Word_count)
-    plt.title('BoxPlot')
+    plt.title('Диаграмма размаха')
     plt.xlabel(''.format(user_name))
     plt.ylabel('Кол-во слов в сообщении')
-    plt.savefig('boxplot.png')
+    plt.savefig('boxplot.png', bbox_inches = 'tight')
     plt.close()
 
 def create_graph_hourly_distribution_me(df, user_name):
@@ -141,7 +142,7 @@ def create_graph_hourly_distribution_me(df, user_name):
     barplot(x = df_hours.Hours, y = df_hours.User_name)
     plt.xlabel('Время, часы')
     plt.ylabel('Кол-во сообщений')
-    plt.savefig('dist_hours.png')
+    plt.savefig('dist_hours.png', bbox_inches = 'tight')
     plt.close()
     del df_hours
 
@@ -154,8 +155,9 @@ def create_graph_days_distribution_me(df, user_name):
     barplot(x = df_day.Date, y = df_day.User_name)
     plt.ylabel('Кол-во сообщений')
     plt.xlabel('Дата')
-    plt.xticks(rotation=26)
-    plt.savefig('dist_days.png')
+
+    plt.xticks(rotation=26, fontsize = 7)
+    plt.savefig('dist_days.png', bbox_inches = 'tight')
     plt.close()
     del df_day
 
@@ -174,10 +176,10 @@ def df_preprocessing(df):
 
 def create_sns_boxplot_word_count(df):
     boxplot(x = df.User_name, y = df.Word_count)
-    plt.title('BoxPlots')
+    plt.title('Диаграммы размаха')
     plt.ylabel('Кол-во слов')
     plt.xlabel('User names')
-    plt.savefig('snsboxplot.png')
+    plt.savefig('snsboxplot.png', bbox_inches = 'tight')
     plt.close()
 
 def graph_count_message(df):
@@ -186,7 +188,7 @@ def graph_count_message(df):
     plt.title('Кол-во написанных сообщений')
     plt.ylabel('Кол-во сообщений')
     plt.xlabel('User names')
-    plt.savefig('count_message.png')
+    plt.savefig('count_message.png', bbox_inches = 'tight')
     plt.close()
     del df_count
 
@@ -198,10 +200,10 @@ def create_pie(df):
     len_exp = new_df.Word_count.shape[0]
     list_exp = [0.2 for i in range(len_exp)]
     plt.pie(x=new_df.Word_count, autopct="%.1f%%", labels=labels, shadow=True, 
-        startangle = 30, radius=1.1, labeldistance = None, explode =list_exp )
-    plt.legend(loc='best', fontsize = 'x-small', shadow = True, ncol = 3)
-    plt.title("% от общего числа слов ({} слов)".format(words_sum), fontsize=14)
-    plt.savefig('pie.png')
+        startangle = 30, radius= 0.8, labeldistance = None, explode = list_exp)
+    plt.legend(loc='lower center', fontsize = 'small', shadow = True, ncol = 3)
+    plt.title("% от общего числа слов ({} слов)".format(words_sum), fontsize = 14)
+    plt.savefig('pie.png', bbox_inches = 'tight')
     plt.close()
     del new_df
 

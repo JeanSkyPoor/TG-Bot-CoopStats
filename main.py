@@ -119,7 +119,7 @@ class My_bot():
         
         send_data_regular_message(user_id, user_name, date, word_count, text, message_id)
  
-
+ 
 if __name__ == "__main__":       
     My_bot = My_bot()    
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup, on_shutdown = on_shutdown)
