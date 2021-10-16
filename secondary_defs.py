@@ -7,6 +7,7 @@ import os
 from datetime import datetime, timedelta
 from seaborn import boxplot, barplot, set_style
 set_style("darkgrid")
+plt.figure(figsize=(10,10))
 
 def get_len(message):
     """
