@@ -1,3 +1,4 @@
+from pandas.core.frame import DataFrame
 from config import config
 import psycopg2
 import pandas as pd
@@ -9,14 +10,14 @@ from seaborn import boxplot, barplot, set_style
 set_style("darkgrid")
 plt.rcParams['figure.figsize'] = (15, 8)
 
-def get_len(message):
+def get_len(message) -> int:
     """
     Takes message and returns words count in message. s.split()
     """
     message = re.sub('[^a-zA-ZА-ЯЁа-яё0-9]', ' ', message).split()
     return int(len(message))
 
-def send_data_regular_message(user_id, user_name, date, word_count, text, message_id):
+def send_data_regular_message(user_id, user_name, date, word_count, text, message_id) -> None:
     """
     Takes data, creates connect to DB, send data and closes connect
     """
@@ -35,7 +36,7 @@ def send_data_regular_message(user_id, user_name, date, word_count, text, messag
         if conn is not None:
             conn.close()
 
-def get_data(user_id, date_start, date_end, limit_return, flag_return_text):
+def get_data(user_id, date_start, date_end, limit_return, flag_return_text) -> pd.DataFrame:
     """
     Takes data, creates connect to DB, get data and closes connect
     """
@@ -58,19 +59,19 @@ def get_data(user_id, date_start, date_end, limit_return, flag_return_text):
         if conn is not None:
             conn.close()
 
-def return_hours(i):
+def return_hours(i: pd.Series) -> str:
     """
     return hours from pandas.Series
     """
     return i[10:13:]
 
-def return_cut_date(i):
+def return_cut_date(i: pd.Series) -> str:
     """ 
     Return date from pandas.Series
     """
     return i[0:10:]
 
-def del_graph(list_graphs):
+def del_graph(list_graphs: list) -> None:
     """
     Delete files in local path
     """
@@ -97,7 +98,7 @@ def message_preprocessing(message):
       
     return type_data, time, chat_id, user_id, user_name
     
-def init_df(type_data, time, user_id):
+def init_df(type_data, time, user_id) -> pd.DataFrame:
     """
     Initialization date_start and date_end, download df and return one
     """
@@ -122,7 +123,7 @@ def init_df(type_data, time, user_id):
 
     return df
     
-def create_boxplot_word_count_me(df, user_name):
+def create_boxplot_word_count_me(df, user_name) -> None:
     """
     Create BoxPlot, save graph and del from memory
     """
@@ -133,7 +134,7 @@ def create_boxplot_word_count_me(df, user_name):
     plt.savefig('boxplot.png', bbox_inches = 'tight')
     plt.close()
 
-def create_graph_hourly_distribution_me(df, user_name):
+def create_graph_hourly_distribution_me(df, user_name) -> None:
     """
     Create graph hourly distribution, save graph and del from memory
     """
@@ -146,7 +147,7 @@ def create_graph_hourly_distribution_me(df, user_name):
     plt.close()
     del df_hours
 
-def create_graph_days_distribution_me(df, user_name):
+def create_graph_days_distribution_me(df, user_name) -> None:
     """
     Create graph days distribution, save graph and del from memory
     """
@@ -161,9 +162,9 @@ def create_graph_days_distribution_me(df, user_name):
     plt.close()
     del df_day
 
-def df_preprocessing(df):
+def df_preprocessing(df: pd.DataFrame):
     """
-    df prepricessing, return information about number message and mean count word messages
+    df prepricessing, return df,  information about number message and mean count word messages
     """
     df.drop(columns=['Text'], inplace=True)
     df.Word_count = df.Word_count.astype(int)
@@ -174,7 +175,7 @@ def df_preprocessing(df):
 
     return df, number_message, mean_count_message
 
-def create_sns_boxplot_word_count(df):
+def create_sns_boxplot_word_count(df: pd.DataFrame) -> None:
     boxplot(x = df.User_name, y = df.Word_count)
     plt.title('Диаграммы размаха')
     plt.ylabel('Кол-во слов')
@@ -182,7 +183,7 @@ def create_sns_boxplot_word_count(df):
     plt.savefig('snsboxplot.png', bbox_inches = 'tight')
     plt.close()
 
-def graph_count_message(df):
+def graph_count_message(df: pd.DataFrame) -> None:
     df_count = df.groupby('User_name', as_index=False).agg({'Date':'count'})
     barplot(x = df_count.User_name, y = df_count.Date)
     plt.title('Кол-во написанных сообщений')
@@ -192,7 +193,7 @@ def graph_count_message(df):
     plt.close()
     del df_count
 
-def create_pie(df):
+def create_pie(df: DataFrame) -> None:
     new_df = df.groupby('User_name', as_index=False).agg({'Word_count':'sum'})
     labels = new_df.User_name
     words_sum = new_df.Word_count.sum()
@@ -207,7 +208,7 @@ def create_pie(df):
     plt.close()
     del new_df
 
-def send_data_photo_message(user_id, message_id, date, pic_id, row):
+def send_data_photo_message(user_id, message_id, date, pic_id, row) -> list:
     """
     Takes data, creates connect to DB, send data and closes connect
     """
