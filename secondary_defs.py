@@ -179,7 +179,7 @@ def create_sns_boxplot_word_count(df: pd.DataFrame) -> None:
     boxplot(x = df.User_name, y = df.Word_count)
     plt.title('Диаграммы размаха')
     plt.ylabel('Кол-во слов')
-    plt.xlabel('User names')
+    plt.xlabel('Usernames')
     plt.savefig('snsboxplot.png', bbox_inches = 'tight')
     plt.close()
 
@@ -188,7 +188,7 @@ def graph_count_message(df: pd.DataFrame) -> None:
     barplot(x = df_count.User_name, y = df_count.Date)
     plt.title('Кол-во написанных сообщений')
     plt.ylabel('Кол-во сообщений')
-    plt.xlabel('User names')
+    plt.xlabel('Usernames')
     plt.savefig('count_message.png', bbox_inches = 'tight')
     plt.close()
     del df_count
