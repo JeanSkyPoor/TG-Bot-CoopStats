@@ -11,6 +11,7 @@ dp = Dispatcher(bot)
 class My_bot():        
     @dp.message_handler(commands='help')
     async def cmd_help(message: types.Message):
+        check_correct_chat_id(message)
         await message.reply(text = ('Мне доступны две команды: /show_me и /show_all\n'
             'После /show_me необходимо передать интересующий тебя временной интервал. '
             'Принимает часы(Н), дни(D) и месяцы(М). Например /show_me 12h выведет тебе '
@@ -21,10 +22,12 @@ class My_bot():
     
     @dp.message_handler(commands='ping')
     async def cmd_show_me(message: types.Message):
+        check_correct_chat_id(message)
         await message.reply(text = 'Я живой')
-        
+
     @dp.message_handler(commands='show_me')
     async def cmd_show_me(message: types.Message):
+        check_correct_chat_id(message)
         try:
             if message.text =='/show_me':
                 return await message.reply(text = 'Упс. Значение пустое. Передай что-нибудь после /show_me, например /show_me 12h')
@@ -57,6 +60,7 @@ class My_bot():
         
     @dp.message_handler(commands='show_all')
     async def cmd_show_all(message: types.Message):
+        check_correct_chat_id(message)
         try:
             if message.text =='/show_all':
                 return await message.reply(text = 'Упс. Значение пустое. Передай что-нибудь после /show_all, например /show_all 12h')
@@ -88,6 +92,7 @@ class My_bot():
         """
         Check to BAYAN
         """
+        check_correct_chat_id(message)
         user_id, date, text, user_name, message_id, chat_id = init_photo_data(message)
 
         if type(text)!= type(None):
@@ -111,6 +116,7 @@ class My_bot():
         """
         Initializations data from message and send to def send_data().
         """
+        check_correct_chat_id(message)
         if message.from_user.is_bot == True:
             pass
 
@@ -119,7 +125,7 @@ class My_bot():
         
         send_data_regular_message(user_id, user_name, date, word_count, text, message_id)
  
- 
+
 if __name__ == "__main__":       
     My_bot = My_bot()    
     executor.start_polling(dp, skip_updates=True)
