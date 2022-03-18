@@ -8,10 +8,13 @@ dp = Dispatcher(bot)
 
 
 
-class My_bot():        
+class My_bot():       
     @dp.message_handler(commands='help')
     async def cmd_help(message: types.Message):
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+        if check == 0:
+            return
+
         await message.reply(text = ('Мне доступны две команды: /show_me и /show_all\n'
             'После /show_me необходимо передать интересующий тебя временной интервал. '
             'Принимает часы(Н), дни(D) и месяцы(М). Например /show_me 12h выведет тебе '
@@ -22,12 +25,20 @@ class My_bot():
     
     @dp.message_handler(commands='ping')
     async def cmd_show_me(message: types.Message):
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+
+        if check == 0:
+            return
+
         await message.reply(text = 'Я живой')
 
     @dp.message_handler(commands='show_me')
     async def cmd_show_me(message: types.Message):
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+
+        if check == 0:
+            return
+
         try:
             if message.text =='/show_me':
                 return await message.reply(text = 'Упс. Значение пустое. Передай что-нибудь после /show_me, например /show_me 12h')
@@ -38,7 +49,7 @@ class My_bot():
             if df.shape[0] == 0:
                 del df
                 return await message.reply(text = 'За указанный период ты ничего не написал')
-            
+                
 
             df, number_message, mean_count_message = df_preprocessing(df)
 
@@ -55,35 +66,45 @@ class My_bot():
             await bot.send_photo(chat_id = chat_id, photo = open('dist_days.png', 'rb'))
 
             del_graph(['boxplot.png', 'dist_hours.png','dist_days.png'])
+
         except ValueError or UnboundLocalError:
             await message.reply(text = 'Что-то пошло не так. Проверь введенные данные')
-        
+            
     @dp.message_handler(commands='show_all')
     async def cmd_show_all(message: types.Message):
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+
+        if check == 0:
+            return
+
         try:
             if message.text =='/show_all':
                 return await message.reply(text = 'Упс. Значение пустое. Передай что-нибудь после /show_all, например /show_all 12h')
-            type_data, time, chat_id, user_id, user_name = message_preprocessing(message)
-            del user_name
-            user_id = None
 
+            type_data, time, chat_id, user_id, user_name = message_preprocessing(message)
+
+            del user_name
+
+            user_id = None
             df = init_df(type_data, time, user_id)
             if df.shape[0] == 0:
                 del df
                 return await message.reply(text = 'За указанный период вы ничего не написали')
+
             df, number_message, mean_count_message = df_preprocessing(df)
             create_sns_boxplot_word_count(df)
             graph_count_message(df)
             create_pie(df)
 
             del df
+
             await message.reply(text = 'Вы успели написать {} сообщений.\n'
                 'В среднем вы писали {} слов в сообщении' .format(number_message, mean_count_message))
             await bot.send_photo(chat_id = chat_id, photo = open('snsboxplot.png', 'rb'))        
             await bot.send_photo(chat_id = chat_id, photo = open('count_message.png', 'rb'))
             await bot.send_photo(chat_id = chat_id, photo = open('pie.png', 'rb'))   
             del_graph(['snsboxplot.png','count_message.png','pie.png'])
+
         except ValueError or UnboundLocalError:
             await message.reply(text = 'Что-то пошло не так. Проверь введенные данные')
 
@@ -92,7 +113,11 @@ class My_bot():
         """
         Check to BAYAN
         """
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+
+        if check == 0:
+            return
+
         user_id, date, text, user_name, message_id, chat_id = init_photo_data(message)
 
         if type(text)!= type(None):
@@ -100,7 +125,7 @@ class My_bot():
         else:
             word_count = 0        
         send_data_regular_message(user_id, user_name, date, word_count, text, message_id)
-        
+            
         document_id = message.photo[0].file_id
         file_info = await bot.get_file(document_id)
         row = None
@@ -116,13 +141,16 @@ class My_bot():
         """
         Initializations data from message and send to def send_data().
         """
-        check_correct_chat_id(message)
+        check = check_correct_chat_id(message)
+        if check == 0:
+            return
+
         if message.from_user.is_bot == True:
             pass
 
         user_id, date, text, user_name, message_id = init_message_data(message)
         word_count = get_len(text)
-        
+            
         send_data_regular_message(user_id, user_name, date, word_count, text, message_id)
  
 
