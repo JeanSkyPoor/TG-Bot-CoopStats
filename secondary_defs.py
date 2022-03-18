@@ -263,6 +263,7 @@ async def on_shutdown(_):
     await bot.send_message(chat_id = '-1001246197532', text = 'Я умер')
 
 def check_correct_chat_id(message):
-    corrent_chat_id = message.chat.id
-    if corrent_chat_id !=chat_id:
-        pass
+    corrent_chat_id = str(message.chat.id)
+
+    if corrent_chat_id != chat_id:
+        return 0
