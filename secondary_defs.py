@@ -7,6 +7,8 @@ import re
 import os
 from datetime import datetime, timedelta,date
 from seaborn import boxplot, barplot, set_style
+from config_bot import chat_id
+
 set_style("darkgrid")
 plt.rcParams['figure.figsize'] = (15, 8)
 
@@ -259,3 +261,8 @@ async def on_startup(_):
 
 async def on_shutdown(_):
     await bot.send_message(chat_id = '-1001246197532', text = 'Я умер')
+
+def check_correct_chat_id(message):
+    corrent_chat_id = message.chat.id
+    if corrent_chat_id !=chat_id:
+        pass
